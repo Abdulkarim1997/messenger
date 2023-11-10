@@ -1,7 +1,7 @@
 # messenger
 
 A new Flutter project.
-
+ THIS for learning the Flutter
 ## Getting Started
 
 This project is a starting point for a Flutter application.
