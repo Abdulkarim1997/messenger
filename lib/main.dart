@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:messenger/layout/news_app/news_layout.dart';
 import 'package:messenger/layout/shop_app/cubit/cubit.dart';
 import 'package:messenger/layout/social_app/cubit/cubit.dart';
 import 'package:messenger/layout/social_app/social_layout.dart';
@@ -20,31 +21,31 @@ import 'layout/news_app/cubit/cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    await Firebase.initializeApp();
-    print("Handling a background message: ${message.data}");
-    showToast(
-        text: "Handling a background message", state: ToastStates.SUCCESS);
-  }
-
-  var token = await FirebaseMessaging.instance.getToken();
-  print("tokenFirebase " + token.toString());
-  // foreground fcm
-  FirebaseMessaging.onMessage.listen((event) {
-    print("resvNotification:");
-    print(event.data.toString());
-    showToast(text: "onMessage", state: ToastStates.SUCCESS);
-  });
-  // when click on notification to open app
-  FirebaseMessaging.onMessageOpenedApp.listen((event) {
-    print("resvOpenedAppNotification:");
-    print(event.data.toString());
-    showToast(text: "onMessageOpenedApp", state: ToastStates.SUCCESS);
-  });
-  // background fcm
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  // await Firebase.initializeApp();
+  //
+  // Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  //   await Firebase.initializeApp();
+  //   print("Handling a background message: ${message.data}");
+  //   showToast(
+  //       text: "Handling a background message", state: ToastStates.SUCCESS);
+  // }
+  //
+  // var token = await FirebaseMessaging.instance.getToken();
+  // print("tokenFirebase " + token.toString());
+  // // foreground fcm
+  // FirebaseMessaging.onMessage.listen((event) {
+  //   print("resvNotification:");
+  //   print(event.data.toString());
+  //   showToast(text: "onMessage", state: ToastStates.SUCCESS);
+  // });
+  // // when click on notification to open app
+  // FirebaseMessaging.onMessageOpenedApp.listen((event) {
+  //   print("resvOpenedAppNotification:");
+  //   print(event.data.toString());
+  //   showToast(text: "onMessageOpenedApp", state: ToastStates.SUCCESS);
+  // });
+  // // background fcm
+  // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   BlocOverrides.runZoned(
     () async {
@@ -120,8 +121,10 @@ class MyApp extends StatelessWidget {
             // darkTheme: darkTheme,
             themeMode:
                 Appcubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-            home: Directionality(
-                textDirection: TextDirection.ltr, child: startWidget),
+            home: NewsLayout(),
+            // Directionality(
+            //     textDirection: TextDirection.ltr, child: startWidget),
+            //
           );
         },
       ),
